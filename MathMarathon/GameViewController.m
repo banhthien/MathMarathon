@@ -7,8 +7,8 @@
 //
 
 #import "GameViewController.h"
-#import "GameScene.h"
-
+#import "MMMenuScene.h"
+#import "MMSharedAssets.h"
 @implementation SKScene (Unarchive)
 
 + (instancetype)unarchiveFromFile:(NSString *)file {
@@ -41,12 +41,24 @@
     /* Sprite Kit applies additional optimizations to improve rendering performance */
     skView.ignoresSiblingOrder = YES;
     
-    // Create and configure the scene.
-    GameScene *scene = [GameScene unarchiveFromFile:@"GameScene"];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
+    [self.activityIndicator startAnimating];
     
-    // Present the scene.
-    [skView presentScene:scene];
+    if (!skView.scene) {
+        [MMSharedAssets loadSharedAssetsWithCompletion:^{
+            NSLog(@"Loading Complete.");
+            
+            // Present Scene
+            SKScene *scene = [MMMenuScene sceneWithSize:skView.bounds.size];
+            scene.scaleMode = SKSceneScaleModeAspectFill;
+            [skView presentScene:scene transition:[SKTransition moveInWithDirection:SKTransitionDirectionRight duration:1]];
+            
+            // Remove loading icon
+            [self.activityIndicator stopAnimating];
+            [self.activityIndicator removeFromSuperview];
+        }];
+    }
+    
+
 }
 
 - (BOOL)shouldAutorotate

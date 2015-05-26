@@ -11,4 +11,5 @@
 
 @interface GameViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
