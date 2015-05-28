@@ -44,6 +44,7 @@
 		578A2C9A1B146FB0000137A7 /* SSKColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 578A2C991B146FB0000137A7 /* SSKColorNode.m */; };
 		57EB3D171B16F42200F6954C /* MMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EB3D161B16F42200F6954C /* MMPlayer.m */; };
 		57EB3D201B16F9E800F6954C /* MMHUDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EB3D1F1B16F9E800F6954C /* MMHUDNode.m */; };
+		57EB3D281B171C4000F6954C /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 57EB3D271B171C4000F6954C /* player.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		57EB3D161B16F42200F6954C /* MMPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPlayer.m; sourceTree = "<group>"; };
 		57EB3D1E1B16F9E800F6954C /* MMHUDNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMHUDNode.h; sourceTree = "<group>"; };
 		57EB3D1F1B16F9E800F6954C /* MMHUDNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMHUDNode.m; sourceTree = "<group>"; };
+		57EB3D271B171C4000F6954C /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,9 +235,10 @@
 		578A2C471B1454BD000137A7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				578A2C541B14668D000137A7 /* buttons.atlas */,
 				578A2C481B1454E7000137A7 /* MMSharedAssets.h */,
 				578A2C491B1454E7000137A7 /* MMSharedAssets.m */,
+				57EB3D271B171C4000F6954C /* player.atlas */,
+				578A2C541B14668D000137A7 /* buttons.atlas */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57EB3D281B171C4000F6954C /* player.atlas in Resources */,
 				578A2C291B1451EE000137A7 /* LaunchScreen.xib in Resources */,
 				578A2C261B1451EE000137A7 /* Images.xcassets in Resources */,
 				578A2C1E1B1451EE000137A7 /* GameScene.sks in Resources */,

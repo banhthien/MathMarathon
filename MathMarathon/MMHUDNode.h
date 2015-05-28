@@ -16,11 +16,14 @@
 @property (nonatomic) SSKScene *parentScene;
 @property (nonatomic) SSKScoreNode *scoreCounter;
 @property (nonatomic) SSKProgressBarNode *breathMeter;
+@property (nonatomic) CGFloat breathTimer;
 
 + (instancetype)NewHudNodeWithZPos:(NSUInteger)Zpos withScene:(SSKScene*)scene;
 - (instancetype)initWithZPos:(NSUInteger)Zpos withScene:(SSKScene*)scene;
 - (void)hudLayerFadeInAnimation;
 - (void)hudLayerFadeOutAnimation;
 - (void)addNode;
+- (void)startScoreCounter;
+- (void)stopScoreCounter;
 
 @end

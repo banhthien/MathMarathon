@@ -10,11 +10,12 @@
 #import "SSKGraphicsUtils.h"
 
 CGFloat const kIdleFrames = 2;
-CGFloat const kSwimFrames = 4;
-CGFloat const kFlyFrames = 2;
-CGFloat const kDiveFrames = 1;
+CGFloat const kRunFrames = 2;
+CGFloat const kJumpFrames = 2;
+CGFloat const kDuckFrames = 2;
+CGFloat const kDieFrames = 2;
 
-CGFloat const kAnimationSpeed = 0.05;
+CGFloat const kAnimationSpeed = 0.1;
 CGFloat const kIdleAnimationSpeed = 0.25;
 
 @implementation MMPlayer
@@ -24,28 +25,29 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 
 - (instancetype)initWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas {
     self.playerType = playerType;
-    NSString *initialTexture = [NSString stringWithFormat:@"penguin_%@_idle_00",[self playerTypeStringVal:playerType]];
+    NSString *initialTexture = [NSString stringWithFormat:@"player_%@_idle_00",[self playerTypeStringVal:playerType]];
     
     self = [super initWithTexture:[atlas textureNamed:initialTexture]];
     if (self) {
         //Idle
-        NSString *baseIdleString = [NSString stringWithFormat:@"penguin_%@_idle_",[self playerTypeStringVal:self.playerType]];
+        NSString *baseIdleString = [NSString stringWithFormat:@"player_%@_idle_",[self playerTypeStringVal:self.playerType]];
         self.idleTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseIdleString frameCount:kIdleFrames];
         
-        //Dive
-        NSString *baseRunString = [NSString stringWithFormat:@"penguin_%@_dive_",[self playerTypeStringVal:self.playerType]];
-        self.runTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseRunString frameCount:kDiveFrames];
+        //Run
+        NSString *baseRunString = [NSString stringWithFormat:@"player_%@_run_",[self playerTypeStringVal:self.playerType]];
+        self.runTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseRunString frameCount:kRunFrames];
         
-        //Swim
-        NSString *baseJumpString = [NSString stringWithFormat:@"penguin_%@_swim_",[self playerTypeStringVal:self.playerType]];
-        self.jumpTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseJumpString frameCount:kSwimFrames];
+        //Jump
+        NSString *baseJumpString = [NSString stringWithFormat:@"player_%@_jump_",[self playerTypeStringVal:self.playerType]];
+        self.jumpTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseJumpString frameCount:kJumpFrames];
         
-        //Fly
-        NSString *baseDuckingString = [NSString stringWithFormat:@"penguin_%@_fly_",[self playerTypeStringVal:self.playerType]];
-        self.duckingTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseDuckingString frameCount:kFlyFrames];
+        //Duck
+        NSString *baseDuckingString = [NSString stringWithFormat:@"player_%@_duck_",[self playerTypeStringVal:self.playerType]];
+        self.duckingTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseDuckingString frameCount:kDuckFrames];
         
-        NSString *baseDieString = [NSString stringWithFormat:@"penguin_%@_fly_",[self playerTypeStringVal:self.playerType]];
-        self.dieTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseDieString frameCount:kFlyFrames];
+        //Die
+        NSString *baseDieString = [NSString stringWithFormat:@"player_%@_die_",[self playerTypeStringVal:self.playerType]];
+        self.dieTextures = [SSKGraphicsUtils loadFramesFromAtlas:atlas baseFileName:baseDieString frameCount:kDieFrames];
     }
     
     return self;
@@ -59,7 +61,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             break;
             
         case PlayerStateRun:
-            [self runAnimationWithTextures:self.runTextures speed:kAnimationSpeed key:@"playerRun" withTimes:0];
+            [self runAnimationWithTextures:self.runTextures speed:kAnimationSpeed key:@"playerRun" withTimes:1];
             break;
             
         case PlayerStateJump:

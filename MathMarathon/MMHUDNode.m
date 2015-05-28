@@ -10,6 +10,7 @@
 #import "SSKUtils.h"
 CGFloat const kMoveAndFadeTime     = 1;
 CGFloat const kMoveAndFadeDistance = 20;
+CGFloat const kMaxBreathTimer = 6.0;
 
 @implementation MMHUDNode
 
@@ -75,6 +76,41 @@ CGFloat const kMoveAndFadeDistance = 20;
 - (void)hudLayerFadeOutAnimation {
     if (self.node) {
         [self.node runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) fadeOutWithDuration:kMoveAndFadeTime]];
+    }
+}
+
+#pragma mark - Score Tracking
+- (void)startScoreCounter {
+    SKAction *timerDelay = [SKAction waitForDuration:.25];
+    SKAction *incrementScore = [SKAction runBlock:^{
+        [(SSKScoreNode*)[self.node childNodeWithName:@"scoreCounter"] increment];
+    }];
+    SKAction *sequence = [SKAction sequence:@[timerDelay,incrementScore]];
+    [self.parentScene runAction:[SKAction repeatActionForever:sequence] withKey:@"scoreKey"];
+}
+
+- (void)stopScoreCounter {
+    [self.parentScene removeActionForKey:@"scoreKey"];
+}
+
+#pragma mark - time count Meter
+- (void)updateBreathMeter {
+    CGFloat currentProgress = self.breathTimer/kMaxBreathTimer;
+    SSKProgressBarNode *progressBar = (SSKProgressBarNode*)[self.node childNodeWithName:@"progressBar"];
+    
+    [progressBar setProgress:currentProgress];
+    
+    if (currentProgress < 0.30) {
+        [progressBar startFlash];
+    }
+    else {
+        [progressBar stopFlash];
+    }
+}
+
+- (void)checkBreathMeterForGameOver {
+    if ([(SSKProgressBarNode*)[self.node childNodeWithName:@"progressBar"] currentProgress] == 0.0) {
+        //[self gameEnd];
     }
 }
 @end

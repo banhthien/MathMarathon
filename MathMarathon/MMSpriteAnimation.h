@@ -10,4 +10,5 @@
 
 @interface MMSpriteAnimation : SKSpriteNode
 - (void)runAnimationWithTextures:(NSArray*)textures speed:(CGFloat)speed key:(NSString*)key withTimes:(int)time;
+-(void)removeObject: (SKAction*)die;
 @end

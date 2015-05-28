@@ -39,15 +39,23 @@
 {
     SKAction *animation = [self actionForKey:key];
     if(animation || [textures count] < 1) return;
-    if(time > 0)
-    {
-        SKAction *animation = [SKAction animateWithTextures:textures timePerFrame:speed];
-        SKAction *repeatBlock = [SKAction repeatAction:animation count:timeOfAnimation];
-        [self runAction:repeatBlock withKey:key];
-    }
-    else
+    if(timeOfAnimation == 0)
     {
         [self runAction:[SKAction animateWithTextures:textures timePerFrame:speed] withKey:key];
     }
+    else
+    {
+        SKAction *repeatBlock = [SKAction repeatAction:[SKAction animateWithTextures:textures timePerFrame:speed] count:timeOfAnimation];
+        [self runAction:repeatBlock withKey:key];
+    }
+}
+-(void)removeObject: (SKAction*)die{
+    [self removeAllActions];
+    SKAction* fade = [SKAction fadeOutWithDuration:1];
+    SKAction* dieFade = [SKAction sequence:@[die,fade]];
+    [self runAction:dieFade completion:^{
+        [self removeFromParent];
+    }];
+    
 }
 @end

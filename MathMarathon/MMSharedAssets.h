@@ -17,5 +17,5 @@ typedef void (^AssetCompletionHandler)(void);
 // Button Textures
 + (SKTextureAtlas*)sharedButtonAtlas;
 + (SKTexture*)sharedButtonPlay;
-
++ (SKTextureAtlas*)sharedPlayerTextures;
 @end

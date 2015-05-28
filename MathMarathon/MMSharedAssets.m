@@ -17,7 +17,8 @@
         sButtonAtlas = [SKTextureAtlas atlasNamed:@"buttons"];
         sButtonPlay = [sButtonAtlas textureNamed:@"button_play"];
         
-        
+        // Player
+        sPlayerTextures = [SKTextureAtlas atlasNamed:@"player"];
         NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
         
         if (!completion) {
@@ -42,4 +43,11 @@ static SKTexture *sButtonPlay = nil;
 {
     return sButtonPlay;
 }
+
+// Player
+static SKTextureAtlas *sPlayerTextures = nil;
++ (SKTextureAtlas*)sharedPlayerTextures {
+    return sPlayerTextures;
+}
+
 @end
