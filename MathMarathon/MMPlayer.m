@@ -61,7 +61,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             break;
             
         case PlayerStateRun:
-            [self runAnimationWithTextures:self.runTextures speed:kAnimationSpeed key:@"playerRun" withTimes:1];
+            [self runAnimationWithTextures:self.runTextures speed:kAnimationSpeed key:@"playerRun" withTimes:0];
             break;
             
         case PlayerStateJump:
