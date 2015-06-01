@@ -15,9 +15,9 @@ typedef NS_ENUM(NSUInteger, ItemType) {
     ItemTypeObstacleCanDuck = 2,
     ItemTypeObstacleBothOfJumpDuck = 3,
 };
+@property (nonatomic) ItemType type;
 
 + (instancetype)itemWithType:(ItemType)type;
 - (instancetype)initWithType:(ItemType)type;
 - (void)update:(NSTimeInterval)dt;
-
 @end

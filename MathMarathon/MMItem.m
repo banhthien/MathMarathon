@@ -17,11 +17,12 @@
 - (instancetype)initWithType:(ItemType)type;
 {
     SKTexture *texture = [self textureForItemType:type];
-    
     self = [super initWithTexture:texture];
+    self.type= type;
     return self;
 }
-#pragma mark - Iceberg Type
+
+#pragma mark - Item Type
 - (SKTexture*)textureForItemType:(ItemType)itemType {
     SKTexture *texture = nil;
     
@@ -34,10 +35,10 @@
             //texture = [[MMSharedAssets sharedIcebergAtlas] textureNamed:@"iceberg_wide"];
             break;
         case ItemTypeObstacleCanDuck:
-            //texture = [[MMSharedAssets sharedIcebergAtlas] textureNamed:@"iceberg_wide"];
+            texture = [MMSharedAssets sharedItemDown];
             break;
         case ItemTypeObstacleCanJump:
-           // texture = [[MMSharedAssets sharedIcebergAtlas] textureNamed:@"iceberg_wide"];
+            texture = [MMSharedAssets sharedItemUp];
             break;
         default:
             break;

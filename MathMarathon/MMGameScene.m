@@ -9,7 +9,11 @@
 #import "MMGameScene.h"
 #import "MMHUDNode.h"
 #import "MMPlayer.h"
+#import "MMItem.h"
+#import "MMObjectInRow.h"
 #import "MMSharedAssets.h"
+#import "SSKMathUtils.h"
+#import "SSKUtils.h"
 typedef enum
 {
     PreGame,
@@ -22,7 +26,9 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 {
     SceneLayerBackground = 0,
     SceneLayerRoad=1,
-    SceneLayerPlayer=2,
+     SceneLayerItemDown=4,
+    SceneLayerPlayer=3,
+    SceneLayerItemUp=2,
 
 };
 @interface MMGameScene()
@@ -50,16 +56,16 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake((self.size.width/10)-self.size.width/2, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor greenColor] withName:@"rect1"]];
+    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake((self.size.width/10)-self.size.width/2, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor greenColor] withName:@"rect"]];
     
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor orangeColor] withName:@"rect2"]];
+    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor orangeColor] withName:@"rect"]];
  
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor redColor] withName:@"rect3"]];
+    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor redColor] withName:@"rect"]];
     
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor grayColor] withName:@"rect4"]];
+    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor grayColor] withName:@"rect"]];
     
     MMPlayer *player = [self playerWithType:PlayerTypeBlack atlas:[MMSharedAssets sharedPlayerTextures]];
-    
+    [self startRowSpawnSequence];
     [self.worldNode addChild:player];
 }
 
@@ -82,7 +88,10 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 {
     MMPlayer *player = [MMPlayer playerWithType:type atlas:atlas];
     
-    [player setPosition:CGPointMake(0, 50)];
+    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2, -self.size.height/2 +50)];
+    [player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, -self.size.height/2 +50)];
+    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5, -self.size.height/2 +50)];
+    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5+self.size.width/5, -self.size.height/2 +50)];
     [player setName:@"player"];
     [player setSize:CGSizeMake(30, 30)];
     [player setZPosition:SceneLayerPlayer];
@@ -90,6 +99,26 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     
     return player;
 }
+
+
+#pragma mark - Row Spawn Sequence
+-(void)startRowSpawnSequence
+{
+    SKAction *wait = [SKAction waitForDuration:1.5];
+    SKAction *spawnRowMove = [SKAction runBlock:^{
+        MMObjectInRow *rowNode = [MMObjectInRow node];
+        [rowNode createItemInRowWithSize:self.size withType:RowTypeItem];
+        [self.worldNode addChild:rowNode];
+        [rowNode runAction:[SKAction moveToY:-self.size.height duration:4 ] withKey:@"moveObstacle" completion:^
+         {
+             [rowNode removeFromParent];
+         }];
+      
+    }];
+    SKAction *sequence = [SKAction sequence:@[wait, spawnRowMove]];
+    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
+}
+
 
 #pragma mark - Scene Asset Preloading
 + (void)loadSceneAssetsWithCompletionHandler:(AssetCompletionHandler)handler {

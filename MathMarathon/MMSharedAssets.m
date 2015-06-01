@@ -21,6 +21,11 @@
         sPlayerTextures = [SKTextureAtlas atlasNamed:@"player"];
         NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
         
+        // Item
+        sItemAtlas = [SKTextureAtlas atlasNamed:@"item"];
+        sItemUp = [sItemAtlas textureNamed:@"chong"];
+        sItemDown = [sItemAtlas textureNamed:@"rao"];
+        
         if (!completion) {
             return;
         }
@@ -50,4 +55,21 @@ static SKTextureAtlas *sPlayerTextures = nil;
     return sPlayerTextures;
 }
 
+// Item
+static SKTextureAtlas *sItemAtlas = nil;
++ (SKTextureAtlas*)sharedItemAtlas {
+    return sItemAtlas;
+}
+
+static SKTexture *sItemUp = nil;
++ (SKTexture*)sharedItemUp
+{
+    return sItemUp;
+}
+
+static SKTexture *sItemDown = nil;
++ (SKTexture*)sharedItemDown
+{
+    return sItemDown;
+}
 @end
