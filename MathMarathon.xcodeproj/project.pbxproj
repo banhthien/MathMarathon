@@ -164,6 +164,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		577BE4561B1C546000A131C7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		578A2C071B1451EE000137A7 = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +192,7 @@
 		578A2C121B1451EE000137A7 /* MathMarathon */ = {
 			isa = PBXGroup;
 			children = (
+				577BE4561B1C546000A131C7 /* Model */,
 				578A2C571B146D58000137A7 /* SSKLibrary */,
 				578A2C521B1455DA000137A7 /* Sprites */,
 				578A2C4B1B14553C000137A7 /* Scenes */,

@@ -43,7 +43,14 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 
 - (void)didMoveToView:(SKView *)view
 {
-    [self createNewGame];
+    MMPlayer *player = [self playerWithType:PlayerTypeBlack atlas:[MMSharedAssets sharedPlayerTextures]];
+
+    self.worldNode = [SKNode node];
+    [self.worldNode setName:@"world"];
+    [self addChild:self.worldNode];
+    [self startRowSpawnSequence];
+    [self.worldNode addChild:player];
+    //[self createNewGame];
     //self.hudNode = [MMHUDNode NewHudNodeWithZPos:0 withScene:self];
 }
 
@@ -88,8 +95,8 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 {
     MMPlayer *player = [MMPlayer playerWithType:type atlas:atlas];
     
-    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2, -self.size.height/2 +50)];
-    [player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, -self.size.height/2 +50)];
+    [player setPosition:CGPointMake((self.size.width/5)-self.size.width/2, -self.size.height/2 +50)];
+    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, -self.size.height/2 +50)];
     //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5, -self.size.height/2 +50)];
     //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5+self.size.width/5, -self.size.height/2 +50)];
     [player setName:@"player"];
@@ -107,19 +114,51 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     SKAction *wait = [SKAction waitForDuration:1.5];
     SKAction *spawnRowMove = [SKAction runBlock:^{
         MMObjectInRow *rowNode = [MMObjectInRow node];
+        [rowNode setName:@"rowNode"];
         [rowNode createItemInRowWithSize:self.size withType:RowTypeItem];
         [self.worldNode addChild:rowNode];
-        [rowNode runAction:[SKAction moveToY:-self.size.height duration:4 ] withKey:@"moveObstacle" completion:^
-         {
-             [rowNode removeFromParent];
-         }];
+        [rowNode moveRowItem];
       
     }];
     SKAction *sequence = [SKAction sequence:@[wait, spawnRowMove]];
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
 }
 
+- (void)stopObstacleSpawnSequence {
+    [self removeActionForKey:@"gamePlaying"];
+}
 
+- (void)stopObstacleMovement {
+    [self.worldNode enumerateChildNodesWithName:@"rowNode" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeActionForKey:@"moveObstacle"];
+    }];
+}
+
+#pragma mark - Check Intersect
+-(void)checkItemDidIntersect
+{
+    [self.worldNode enumerateChildNodesWithName:@"rowNode" usingBlock:^(SKNode *node, BOOL *stop) {
+        MMObjectInRow *rowNode = (MMObjectInRow*)node;
+        [rowNode enumerateChildNodesWithName:@"item" usingBlock:^(SKNode *node, BOOL *stop) {
+            MMItem* item = (MMItem*)node;
+            if (CGRectIntersectsRect([self currentPlayer].frame, item.frame)) {
+                    switch (item.type) {
+                        case ItemTypeObstacleCanDuck:
+                            NSLog(@"dung thang co the cui xuong");
+                            break;
+                        case ItemTypeObstacleCanJump:
+                            NSLog(@"dung thang co the nhay len");
+                            break;
+                            
+                        default:
+                            break;
+                }
+            }
+
+        }];
+        
+            }];
+}
 #pragma mark - Scene Asset Preloading
 + (void)loadSceneAssetsWithCompletionHandler:(AssetCompletionHandler)handler {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -142,5 +181,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 - (void)update:(NSTimeInterval)currentTime {
     [super update:currentTime];
     [[self currentPlayer] update:currentTime];
+    [self checkItemDidIntersect];
 }
 @end
