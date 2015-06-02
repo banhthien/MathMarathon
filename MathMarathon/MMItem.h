@@ -16,8 +16,9 @@ typedef NS_ENUM(NSUInteger, ItemType) {
     ItemTypeObstacleBothOfJumpDuck = 3,
 };
 @property (nonatomic) ItemType type;
-
+@property (nonatomic) NSArray* bonusItem;
 + (instancetype)itemWithType:(ItemType)type;
 - (instancetype)initWithType:(ItemType)type;
 - (void)update:(NSTimeInterval)dt;
+- (void)spinCoinAnimation;
 @end

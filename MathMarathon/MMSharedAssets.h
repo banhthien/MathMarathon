@@ -20,4 +20,6 @@ typedef void (^AssetCompletionHandler)(void);
 + (SKTextureAtlas*)sharedPlayerTextures;
 + (SKTexture*)sharedItemUp;
 + (SKTexture*)sharedItemDown;
++ (SKTextureAtlas*)sharedCoinAtlas;
++ (NSArray*)sharedCoinTextures;
 @end

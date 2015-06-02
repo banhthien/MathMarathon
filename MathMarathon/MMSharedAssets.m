@@ -7,6 +7,7 @@
 //
 
 #import "MMSharedAssets.h"
+#import "SSKGraphicsUtils.h"
 #import <SpriteKit/SpriteKit.h>
 @implementation MMSharedAssets
 + (void)loadSharedAssetsWithCompletion:(AssetCompletionHandler)completion {
@@ -21,11 +22,14 @@
         sPlayerTextures = [SKTextureAtlas atlasNamed:@"player"];
         NSLog(@"Scene loaded in %f seconds",[[NSDate date] timeIntervalSinceDate:startTime]);
         
-        // Item
+        // Item Obstale
         sItemAtlas = [SKTextureAtlas atlasNamed:@"item"];
         sItemUp = [sItemAtlas textureNamed:@"chong"];
         sItemDown = [sItemAtlas textureNamed:@"rao"];
         
+        //Item Bonus
+        sCoinsAtlas = [SKTextureAtlas atlasNamed:@"coins"];
+        sCoinTextures = [SSKGraphicsUtils loadFramesFromAtlas:sCoinsAtlas baseFileName:@"coin_" frameCount:6];
         if (!completion) {
             return;
         }
@@ -55,7 +59,7 @@ static SKTextureAtlas *sPlayerTextures = nil;
     return sPlayerTextures;
 }
 
-// Item
+// Item Obstale
 static SKTextureAtlas *sItemAtlas = nil;
 + (SKTextureAtlas*)sharedItemAtlas {
     return sItemAtlas;
@@ -71,5 +75,16 @@ static SKTexture *sItemDown = nil;
 + (SKTexture*)sharedItemDown
 {
     return sItemDown;
+}
+
+// Item Bonus
+static SKTextureAtlas *sCoinsAtlas = nil;
++ (SKTextureAtlas*)sharedCoinAtlas {
+    return sCoinsAtlas;
+}
+
+static NSArray *sCoinTextures = nil;
++ (NSArray*)sharedCoinTextures {
+    return sCoinTextures;
 }
 @end

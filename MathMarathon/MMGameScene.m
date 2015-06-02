@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 
 - (void)didMoveToView:(SKView *)view
 {
+    self.levelToShowAnwser = 0;
     [self createNewGame];
     //self.hudNode = [MMHUDNode NewHudNodeWithZPos:0 withScene:self];
 }
@@ -137,9 +138,18 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     SKAction *spawnRowMove = [SKAction runBlock:^{
         MMObjectInRow *rowNode = [MMObjectInRow node];
         [rowNode setName:@"rowNode"];
-        [rowNode createItemInRowWithSize:self.size withType:RowTypeItem];
-        [self.worldNode addChild:rowNode];
-        [rowNode moveRowItem];
+        self.levelToShowAnwser ++;
+        if (self.levelToShowAnwser == 3) {
+            [rowNode createItemInRowWithSize:self.size withType:RowTypeAnswer];
+            [self.worldNode addChild:rowNode];
+            self.levelToShowAnwser =0;
+        }
+        else
+        {
+            [rowNode createItemInRowWithSize:self.size withType:RowTypeItem];
+            [self.worldNode addChild:rowNode];
+        }
+        //[rowNode moveRowItem];
       
     }];
     SKAction *sequence = [SKAction sequence:@[wait, spawnRowMove]];
@@ -171,7 +181,19 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
                         case ItemTypeObstacleCanJump:
                             NSLog(@"dung thang co the nhay len");
                             break;
-                            
+                        case ItemTypeBunusScore:
+                        {
+                            [item removeFromParent];
+                            [self.worldNode addChild:item];
+                            SKAction *scaleUp = [SKAction scaleTo:1.4 duration:0.075];
+                            SKAction *scaleNormal = [SKAction scaleTo:1 duration:0.075];
+                            [item runAction:[SKAction sequence:@[scaleUp,scaleNormal]]];
+                            [item runAction:[SKAction moveTo:CGPointMake(0,500) duration:2] completion:^{
+                               
+                                [item removeFromParent];
+                            }];
+                        }
+                            break;
                         default:
                             break;
                 }
@@ -181,6 +203,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
         
             }];
 }
+
 #pragma mark - Scene Asset Preloading
 + (void)loadSceneAssetsWithCompletionHandler:(AssetCompletionHandler)handler {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{

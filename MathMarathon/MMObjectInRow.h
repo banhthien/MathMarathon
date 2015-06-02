@@ -17,6 +17,5 @@ typedef NS_ENUM(NSUInteger, RowType)
 };
 @property (nonatomic) CGSize size;
 -(void)createItemInRowWithSize:(CGSize)size withType:(RowType)type;
--(void)checkItemDidIntersectWithPlayer:(MMPlayer*)player;
--(void)moveRowItem;
+//-(void)checkItemDidIntersectWithPlayer:(MMPlayer*)player;
 @end

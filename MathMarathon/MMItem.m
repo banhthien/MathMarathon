@@ -28,7 +28,8 @@
     
     switch (itemType) {
         case ItemTypeBunusScore:
-            //texture = [MMSharedAssets sharedIcebergGameTexture];
+            self.bonusItem = [MMSharedAssets sharedCoinTextures];
+            texture = [[MMSharedAssets sharedCoinAtlas] textureNamed:@"coin_00"];
             break;
             
         case ItemTypeObstacleBothOfJumpDuck:
@@ -44,6 +45,15 @@
             break;
     }
     return texture;
+}
+-(void)spinCoinAnimation
+{
+    if ([self actionForKey:@"spinCoin"]) {
+        NSLog(@"da ton tai spinCoin");
+        return;
+    }
+    SKAction *animation = [SKAction animateWithTextures:self.bonusItem timePerFrame:0.1];
+    [self runAction:[SKAction repeatActionForever:animation] withKey:@"spinCoin"];
 }
 - (void)update:(NSTimeInterval)dt
 {

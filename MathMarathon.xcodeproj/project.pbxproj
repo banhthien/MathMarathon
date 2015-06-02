@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		572B752E1B1D504A004E1CE8 /* MMAnwser.m in Sources */ = {isa = PBXBuildFile; fileRef = 572B752D1B1D504A004E1CE8 /* MMAnwser.m */; };
+		572B75301B1D6524004E1CE8 /* coins.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 572B752F1B1D6524004E1CE8 /* coins.atlas */; };
 		577BE4491B1BFEB500A131C7 /* MMItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 577BE4481B1BFEB500A131C7 /* MMItem.m */; };
 		577BE44C1B1C05CA00A131C7 /* MMPhysicalManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 577BE44B1B1C05CA00A131C7 /* MMPhysicalManager.m */; };
 		577BE44E1B1C09AB00A131C7 /* item.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 577BE44D1B1C09AB00A131C7 /* item.atlas */; };
@@ -65,6 +66,7 @@
 /* Begin PBXFileReference section */
 		572B752C1B1D504A004E1CE8 /* MMAnwser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAnwser.h; sourceTree = "<group>"; };
 		572B752D1B1D504A004E1CE8 /* MMAnwser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAnwser.m; sourceTree = "<group>"; };
+		572B752F1B1D6524004E1CE8 /* coins.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = coins.atlas; sourceTree = "<group>"; };
 		577BE4471B1BFEB500A131C7 /* MMItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMItem.h; sourceTree = "<group>"; };
 		577BE4481B1BFEB500A131C7 /* MMItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMItem.m; sourceTree = "<group>"; };
 		577BE44A1B1C05CA00A131C7 /* MMPhysicalManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicalManager.h; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			children = (
 				578A2C481B1454E7000137A7 /* MMSharedAssets.h */,
 				578A2C491B1454E7000137A7 /* MMSharedAssets.m */,
+				572B752F1B1D6524004E1CE8 /* coins.atlas */,
 				577BE44D1B1C09AB00A131C7 /* item.atlas */,
 				57EB3D271B171C4000F6954C /* player.atlas */,
 				578A2C541B14668D000137A7 /* buttons.atlas */,
@@ -475,6 +478,7 @@
 			files = (
 				57EB3D281B171C4000F6954C /* player.atlas in Resources */,
 				577BE44E1B1C09AB00A131C7 /* item.atlas in Resources */,
+				572B75301B1D6524004E1CE8 /* coins.atlas in Resources */,
 				578A2C291B1451EE000137A7 /* LaunchScreen.xib in Resources */,
 				578A2C261B1451EE000137A7 /* Images.xcassets in Resources */,
 				578A2C1E1B1451EE000137A7 /* GameScene.sks in Resources */,

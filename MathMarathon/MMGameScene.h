@@ -9,5 +9,5 @@
 #import "SSKScene.h"
 
 @interface MMGameScene : SSKScene
-
+@property (nonatomic) int levelToShowAnwser;
 @end
