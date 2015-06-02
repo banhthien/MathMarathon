@@ -25,6 +25,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 
 - (instancetype)initWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas {
     self.playerType = playerType;
+    self.inAction = FALSE;
     NSString *initialTexture = [NSString stringWithFormat:@"player_%@_idle_00",[self playerTypeStringVal:playerType]];
     
     self = [super initWithTexture:[atlas textureNamed:initialTexture]];
@@ -78,6 +79,32 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             break;
     }
 
+}
+#pragma mark - Move Action
+-(void)moveRightWithSize:(CGSize)size
+{
+    self.inAction=TRUE;
+    [self runAction:[SKAction moveByX:(size.width/5) y:0 duration:0.5] completion:^{
+        self.inAction = FALSE;
+    }];
+}
+
+-(void)moveLeftWithSize:(CGSize)size
+{
+    self.inAction=TRUE;
+    [self runAction:[SKAction moveByX:-(size.width/5) y:0 duration:0.5] completion:^{
+        self.inAction = FALSE;
+    }];
+}
+
+-(void)jump
+{
+    
+}
+
+-(void)duck
+{
+    
 }
 #pragma mark - Player Type String Parsing
 - (NSString*)playerTypeStringVal:(PlayerType)playerType {

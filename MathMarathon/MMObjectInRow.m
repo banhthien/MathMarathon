@@ -26,24 +26,30 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 {
     self.size=size;
     if(type == RowTypeItem){
-    MMItem *itemOne = [self itemWithType:[self random] withPos:CGPointMake((self.size.width/5)-self.size.width/2, self.size.height/2)];
-    [self addChild:itemOne];
-    MMItem *itemTwo = [self itemWithType:[self random] withPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, self.size.height/2)];
-    [self addChild:itemTwo];
-    MMItem *itemThree = [self itemWithType:[self random] withPos:CGPointMake((size.width/5)-size.width/2 +size.width/5+size.width/5, size.height/2) ];
-    [self addChild:itemThree];
-    MMItem *itemFour = [self itemWithType:[self random] withPos:CGPointMake((size.width/5)-size.width/2 +size.width/5+size.width/5+size.width/5, size.height/2)];
-    [self addChild:itemFour];
+
+        [self randomNewItemWithPos:CGPointMake((self.size.width/5)-self.size.width/2, self.size.height/2)];
+        [self randomNewItemWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, self.size.height/2)];
+        [self randomNewItemWithPos:CGPointMake((size.width/5)-size.width/2 +size.width/5+size.width/5, size.height/2)];
+        [self randomNewItemWithPos:CGPointMake((size.width/5)-size.width/2 +size.width/5+size.width/5+size.width/5, size.height/2)];
     }
     else
     {
         
     }
 }
-
--(NSUInteger)random
+-(void)randomNewItemWithPos:(CGPoint)pos
 {
-    return ((arc4random()%2)+1);
+    NSUInteger randomNumber = [self randomFrom:1 toNumber:2];
+    if(randomNumber == 1)
+    {
+    MMItem *item = [self itemWithType:[self randomFrom:1 toNumber:2] withPos:pos];
+    [self addChild:item];
+    }
+    
+}
+-(NSUInteger)randomFrom:(NSUInteger)fromNumber toNumber:(NSUInteger)toNumber
+{
+    return ((arc4random()%(toNumber -fromNumber +1))+fromNumber);
 }
 -(MMItem*)itemWithType:(ItemType)type withPos:(CGPoint)pos
 {

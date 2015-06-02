@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		572B752E1B1D504A004E1CE8 /* MMAnwser.m in Sources */ = {isa = PBXBuildFile; fileRef = 572B752D1B1D504A004E1CE8 /* MMAnwser.m */; };
 		577BE4491B1BFEB500A131C7 /* MMItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 577BE4481B1BFEB500A131C7 /* MMItem.m */; };
 		577BE44C1B1C05CA00A131C7 /* MMPhysicalManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 577BE44B1B1C05CA00A131C7 /* MMPhysicalManager.m */; };
 		577BE44E1B1C09AB00A131C7 /* item.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 577BE44D1B1C09AB00A131C7 /* item.atlas */; };
@@ -62,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		572B752C1B1D504A004E1CE8 /* MMAnwser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAnwser.h; sourceTree = "<group>"; };
+		572B752D1B1D504A004E1CE8 /* MMAnwser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAnwser.m; sourceTree = "<group>"; };
 		577BE4471B1BFEB500A131C7 /* MMItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMItem.h; sourceTree = "<group>"; };
 		577BE4481B1BFEB500A131C7 /* MMItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMItem.m; sourceTree = "<group>"; };
 		577BE44A1B1C05CA00A131C7 /* MMPhysicalManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicalManager.h; sourceTree = "<group>"; };
@@ -281,18 +284,20 @@
 			children = (
 				578A2C951B146D9D000137A7 /* MMButtonNode.h */,
 				578A2C961B146D9D000137A7 /* MMButtonNode.m */,
-				578A2C531B1455E6000137A7 /* SpriteNodes */,
+				578A2C531B1455E6000137A7 /* GameObject */,
 			);
 			name = Sprites;
 			sourceTree = "<group>";
 		};
-		578A2C531B1455E6000137A7 /* SpriteNodes */ = {
+		578A2C531B1455E6000137A7 /* GameObject */ = {
 			isa = PBXGroup;
 			children = (
-				577BE4471B1BFEB500A131C7 /* MMItem.h */,
-				577BE4481B1BFEB500A131C7 /* MMItem.m */,
 				5782CCC51B15B1470004EB5E /* MMSpriteAnimation.h */,
 				5782CCC61B15B1470004EB5E /* MMSpriteAnimation.m */,
+				577BE4471B1BFEB500A131C7 /* MMItem.h */,
+				577BE4481B1BFEB500A131C7 /* MMItem.m */,
+				572B752C1B1D504A004E1CE8 /* MMAnwser.h */,
+				572B752D1B1D504A004E1CE8 /* MMAnwser.m */,
 				57EB3D151B16F42200F6954C /* MMPlayer.h */,
 				57EB3D161B16F42200F6954C /* MMPlayer.m */,
 				57EB3D1E1B16F9E800F6954C /* MMHUDNode.h */,
@@ -300,7 +305,7 @@
 				577BE4531B1C48E200A131C7 /* MMObjectInRow.h */,
 				577BE4541B1C48E200A131C7 /* MMObjectInRow.m */,
 			);
-			name = SpriteNodes;
+			name = GameObject;
 			sourceTree = "<group>";
 		};
 		578A2C571B146D58000137A7 /* SSKLibrary */ = {
@@ -511,6 +516,7 @@
 				578A2C4A1B1454E7000137A7 /* MMSharedAssets.m in Sources */,
 				578A2C411B145371000137A7 /* MMUserManager.m in Sources */,
 				578A2C911B146D58000137A7 /* SFAudio.m in Sources */,
+				572B752E1B1D504A004E1CE8 /* MMAnwser.m in Sources */,
 				578A2C861B146D58000137A7 /* UIDevice+SFAdditions.m in Sources */,
 				57EB3D171B16F42200F6954C /* MMPlayer.m in Sources */,
 				578A2C831B146D58000137A7 /* SKColor+SFAdditions.m in Sources */,

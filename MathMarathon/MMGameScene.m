@@ -43,17 +43,12 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 
 - (void)didMoveToView:(SKView *)view
 {
-    MMPlayer *player = [self playerWithType:PlayerTypeBlack atlas:[MMSharedAssets sharedPlayerTextures]];
-
-    self.worldNode = [SKNode node];
-    [self.worldNode setName:@"world"];
-    [self addChild:self.worldNode];
-    [self startRowSpawnSequence];
-    [self.worldNode addChild:player];
-    //[self createNewGame];
+    [self createNewGame];
     //self.hudNode = [MMHUDNode NewHudNodeWithZPos:0 withScene:self];
 }
-
+/**
+ *  create new world
+ */
 - (void)createNewGame
 {
     self.gameState = PreGame;
@@ -75,7 +70,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     [self startRowSpawnSequence];
     [self.worldNode addChild:player];
 }
-
+#pragma mark - new road with rect
 -(SKShapeNode*)newRectNodeWithBox:(CGRect)box1 withColor:(SKColor*)strokeColor withFillColor:(SKColor*)fillColor withName:(NSString*)name
 {
     SKShapeNode* rectNode = [SKShapeNode node];
@@ -88,6 +83,33 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     rectNode.strokeColor = strokeColor;
     rectNode.antialiased = NO;
     return rectNode;
+}
+#pragma mark - Touch Action
+
+-(void)interactionBeganAtPosition:(CGPoint)position
+{
+    if (![self currentPlayer].inAction) {
+        if(position.y <=0)
+        {
+            if (position.x>=0) {
+                 [[self currentPlayer] moveRightWithSize:self.size];
+            }
+            else
+            {
+                [[self currentPlayer] moveLeftWithSize:self.size];
+            }
+        }
+    }
+}
+
+-(void)interactionMovedAtPosition:(CGPoint)position
+{
+    
+}
+
+-(void)interactionEndedAtPosition:(CGPoint)position
+{
+    
 }
 
 #pragma mark - Player Types

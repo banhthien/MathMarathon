@@ -29,8 +29,10 @@ typedef NS_ENUM(NSUInteger, PlayerState) {
 @property (nonatomic) NSArray *jumpTextures;
 @property (nonatomic) NSArray *duckingTextures;
 @property (nonatomic) NSArray *dieTextures;
-
+@property (nonatomic) BOOL inAction;
 + (instancetype)playerWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas;
 - (instancetype)initWithType:(PlayerType)playerType atlas:(SKTextureAtlas*)atlas;
 - (void)update:(NSTimeInterval)dt;
+-(void)moveLeftWithSize:(CGSize)size;
+-(void)moveRightWithSize:(CGSize)size;
 @end
