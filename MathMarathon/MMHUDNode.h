@@ -10,20 +10,17 @@
 #import "SSKScene.h"
 #import "SSKScoreNode.h"
 #import "SSKProgressBarNode.h"
-@interface MMHUDNode : NSObject
+@interface MMHUDNode : SKNode
 
-@property (nonatomic) SKNode *node;
 @property (nonatomic) SSKScene *parentScene;
 @property (nonatomic) SSKScoreNode *scoreCounter;
 @property (nonatomic) SSKProgressBarNode *breathMeter;
 @property (nonatomic) CGFloat breathTimer;
 
-+ (instancetype)NewHudNodeWithZPos:(NSUInteger)Zpos withScene:(SSKScene*)scene;
-- (instancetype)initWithZPos:(NSUInteger)Zpos withScene:(SSKScene*)scene;
+- (void)initWithZPos:(NSUInteger)Zpos withScene:(SSKScene*)scene;
 - (void)hudLayerFadeInAnimation;
 - (void)hudLayerFadeOutAnimation;
 - (void)addNode;
-- (void)startScoreCounter;
 - (void)stopScoreCounter;
-
+-(void)addScore;
 @end

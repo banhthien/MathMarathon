@@ -17,8 +17,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     SceneLayerItemUp=2,
     SceneLayerPlayer=3,
     SceneLayerItemDown=4,
-    
-    
 };
 
 
@@ -50,14 +48,14 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     [myLabel setZPosition:SceneLayerItemDown];
     [self addChild:myLabel];
     [myLabel runAction:[SKAction moveToY:-self.size.height duration:4 ] withKey:@"moveObstacle" completion:^
-                             {
-                                 [myLabel removeFromParent];
-                             }];
+    {
+        [myLabel removeFromParent];
+    }];
 }
 -(void)randomNewItemWithPos:(CGPoint)pos
 {
-    NSUInteger randomNumber = [self randomFrom:1 toNumber:3];
-    if(randomNumber == 1)
+    NSUInteger randomNumber = [self randomFrom:1 toNumber:4];
+    if(randomNumber == 1 || randomNumber == 2)
     {
     MMItem *item = [self itemWithType:[self randomFrom:1 toNumber:2] withPos:pos];
     [self addChild:item];
@@ -66,7 +64,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
              [item removeFromParent];
          }];
     }
-    else if(randomNumber == 2)
+    else if(randomNumber == 3)
     {
         SKAction *wait = [SKAction waitForDuration:0.2];
         SKAction *addCoin = [SKAction runBlock:^{
@@ -78,7 +76,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
              }];
         }];
         SKAction *squence = [SKAction sequence:@[wait,addCoin]];
-        [self runAction:[SKAction repeatAction:squence count:4]];
+        [self runAction:[SKAction repeatAction:squence count:[self randomFrom:1 toNumber:5]]];
     }
     else
     {

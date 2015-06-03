@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
      SceneLayerItemDown=4,
     SceneLayerPlayer=3,
     SceneLayerItemUp=2,
+    SceneLayerHUD=5,
 
 };
 @interface MMGameScene()
@@ -45,16 +46,40 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 {
     self.levelToShowAnwser = 0;
     [self createNewGame];
-    //self.hudNode = [MMHUDNode NewHudNodeWithZPos:0 withScene:self];
+   
 }
-/**
- *  create new world
- */
+
+#pragma mark - GameState PreGame
 - (void)createNewGame
 {
     self.gameState = PreGame;
-   // myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                  // CGRectGetMidY(self.frame));
+
+    [self newWorldGame];
+    
+}
+
+#pragma GameState Playing
+-(void)gameStart
+{
+    self.gameState = Playing;
+    [self newHudGame];
+    [self.hudNode hudLayerFadeInAnimation];
+    
+    [self startRowSpawnSequence];
+}
+
+#pragma mark - new Hud Game
+-(void)newHudGame
+{
+    self.hudNode = [MMHUDNode node];
+    [self.hudNode initWithZPos:SceneLayerHUD withScene:self];
+    [self addChild:self.hudNode];
+}
+
+#pragma mark - new world game
+-(void)newWorldGame
+{
+    
     self.worldNode = [SKNode node];
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
@@ -62,15 +87,15 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake((self.size.width/10)-self.size.width/2, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor greenColor] withName:@"rect"]];
     
     [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor orangeColor] withName:@"rect"]];
- 
+    
     [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor redColor] withName:@"rect"]];
     
     [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor grayColor] withName:@"rect"]];
     
     MMPlayer *player = [self playerWithType:PlayerTypeBlack atlas:[MMSharedAssets sharedPlayerTextures]];
-    [self startRowSpawnSequence];
     [self.worldNode addChild:player];
 }
+
 #pragma mark - new road with rect
 -(SKShapeNode*)newRectNodeWithBox:(CGRect)box1 withColor:(SKColor*)strokeColor withFillColor:(SKColor*)fillColor withName:(NSString*)name
 {
@@ -85,19 +110,24 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     rectNode.antialiased = NO;
     return rectNode;
 }
-#pragma mark - Touch Action
 
+#pragma mark - Touch Action
 -(void)interactionBeganAtPosition:(CGPoint)position
 {
-    if (![self currentPlayer].inAction) {
-        if(position.y <=0)
-        {
-            if (position.x>=0) {
-                 [[self currentPlayer] moveRightWithSize:self.size];
-            }
-            else
+    if (self.gameState==PreGame) {
+        [self gameStart];
+    }
+    if (self.gameState == Playing) {
+        if (![self currentPlayer].inAction) {
+            if(position.y <=0)
             {
-                [[self currentPlayer] moveLeftWithSize:self.size];
+                if (position.x>=0) {
+                    [[self currentPlayer] moveRightWithSize:self.size];
+                }
+                else
+                {
+                    [[self currentPlayer] moveLeftWithSize:self.size];
+                }
             }
         }
     }
@@ -119,9 +149,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     MMPlayer *player = [MMPlayer playerWithType:type atlas:atlas];
     
     [player setPosition:CGPointMake((self.size.width/5)-self.size.width/2, -self.size.height/2 +50)];
-    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, -self.size.height/2 +50)];
-    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5, -self.size.height/2 +50)];
-    //[player setPosition:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5+self.size.width/5, -self.size.height/2 +50)];
     [player setName:@"player"];
     [player setSize:CGSizeMake(30, 30)];
     [player setZPosition:SceneLayerPlayer];
@@ -162,7 +189,10 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 
 - (void)stopObstacleMovement {
     [self.worldNode enumerateChildNodesWithName:@"rowNode" usingBlock:^(SKNode *node, BOOL *stop) {
-        [node removeActionForKey:@"moveObstacle"];
+        MMObjectInRow *rowNode = (MMObjectInRow*)node;
+        [rowNode enumerateChildNodesWithName:@"item" usingBlock:^(SKNode *node, BOOL *stop) {
+            [node removeActionForKey:@"moveObstacle"];
+        }];
     }];
 }
 
@@ -183,14 +213,17 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
                             break;
                         case ItemTypeBunusScore:
                         {
+                            [item removeActionForKey:@"moveObstacle"];
                             [item removeFromParent];
+                            
                             [self.worldNode addChild:item];
                             SKAction *scaleUp = [SKAction scaleTo:1.4 duration:0.075];
                             SKAction *scaleNormal = [SKAction scaleTo:1 duration:0.075];
                             [item runAction:[SKAction sequence:@[scaleUp,scaleNormal]]];
-                            [item runAction:[SKAction moveTo:CGPointMake(0,500) duration:2] completion:^{
-                               
+                             [self.hudNode addScore];
+                            [item runAction:[SKAction moveTo:CGPointMake(self.size.width/2,(self.size.height/2)) duration:2] completion:^{
                                 [item removeFromParent];
+                               
                             }];
                         }
                             break;
@@ -202,6 +235,20 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
         }];
         
             }];
+}
+
+#pragma mark - meter Tracking
+- (void)startScoreCounter {
+    SKAction *timerDelay = [SKAction waitForDuration:.5];
+    SKAction *incrementScore = [SKAction runBlock:^{
+        [(SSKScoreNode*)[self.hudNode childNodeWithName:@"scoreCounter"] increment];
+    }];
+    SKAction *sequence = [SKAction sequence:@[timerDelay,incrementScore]];
+    [self runAction:[SKAction repeatActionForever:sequence] withKey:@"scoreKey"];
+}
+
+- (void)stopScoreCounter {
+    [self removeActionForKey:@"scoreKey"];
 }
 
 #pragma mark - Scene Asset Preloading
@@ -225,7 +272,12 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 #pragma mark - Scene Processing
 - (void)update:(NSTimeInterval)currentTime {
     [super update:currentTime];
-    [[self currentPlayer] update:currentTime];
-    [self checkItemDidIntersect];
+    if (self.gameState == PreGame || self.gameState == Playing) {
+        [[self currentPlayer] update:currentTime];
+    }
+    if(self.gameState == Playing)
+    {
+       [self checkItemDidIntersect];
+    }
 }
 @end
