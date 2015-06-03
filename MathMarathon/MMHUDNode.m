@@ -10,11 +10,11 @@
 #import "SSKUtils.h"
 #import "MMItem.h"
 #import "MMUserManager.h"
-CGFloat const kMoveAndFadeTime     = 1;
-CGFloat const kMoveAndFadeDistance = 20;
-CGFloat const kMaxBreathTimer = 6.0;
+#import "Define.h"
 
 @implementation MMHUDNode
+
+
 
 
 -(void)initWithZPos:(NSUInteger)Zpos withScene:(SSKScene *)scene
@@ -23,7 +23,7 @@ CGFloat const kMaxBreathTimer = 6.0;
     [self setZPosition:Zpos];
     [self setName:@"hud"];
     [self setAlpha:0];
-    [self setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
+    [self setPosition:CGPointMake(-20, 0)];
     
     CGFloat padding = 5.0;
     
@@ -68,12 +68,12 @@ CGFloat const kMaxBreathTimer = 6.0;
 #pragma mark - fade animation
 
 - (void)hudLayerFadeInAnimation {
-    [self runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) fadeInWithDuration:kMoveAndFadeTime]];
+    [self runAction:[SKAction moveDistance:CGVectorMake(20, 0) fadeInWithDuration:1]];
 }
 
 - (void)hudLayerFadeOutAnimation {
     if (self) {
-        [self runAction:[SKAction moveDistance:CGVectorMake(kMoveAndFadeDistance, 0) fadeOutWithDuration:kMoveAndFadeTime]];
+        [self runAction:[SKAction moveDistance:CGVectorMake(20, 0) fadeOutWithDuration:1]];
     }
 }
 
@@ -86,9 +86,38 @@ CGFloat const kMaxBreathTimer = 6.0;
     [self.parentScene removeActionForKey:@"scoreKey"];
 }
 
+- (void)saveCoins {
+    NSInteger coinCount = [(SSKScoreNode*)[self childNodeWithName:@"coinCounter"] count];
+    [[MMUserManager sharedManager] saveCoins:[NSNumber numberWithInteger:coinCount]];
+    NSLog(@"Total coins:%@",[[MMUserManager sharedManager] getTotalCoins]);
+}
+
+#pragma mark - HighScore
+- (void)checkIfHighScore {
+    NSInteger currentScore = [(SSKScoreNode*)[self childNodeWithName:@"scoreCounter"] count];
+    NSInteger highScore = [[MMUserManager sharedManager] getHighScore].integerValue;
+    
+    if (currentScore > highScore) {
+        [[MMUserManager sharedManager] saveHighScore:[NSNumber numberWithInteger:currentScore]];
+        //[self isNewHighScore];
+    }
+}
+
+//- (void)isNewHighScore {
+//    SKLabelNode *highScoreLabel = [self createNewLabelWithText:@"Highscore!" withFontSize:20];
+//    [highScoreLabel setZRotation:SSKDegreesToRadians(35.0)];
+//    [highScoreLabel setFontColor:[SKColor redColor]];
+//    [highScoreLabel setZPosition:SceneLayerGameOver];
+//    [highScoreLabel setPosition:CGPointMake(self.parentScene.size.width/3, self.parentScene.size.height/3 + 25)];
+//    [highScoreLabel setName:kRemoveName];
+//    [self addChild:highScoreLabel];
+//    
+//    [self runColorChangeOnLabel:highScoreLabel interval:.35];
+//}
+
 #pragma mark - time count Meter
 - (void)updateBreathMeter {
-    CGFloat currentProgress = self.breathTimer/kMaxBreathTimer;
+    CGFloat currentProgress = self.breathTimer/6.0;
     SSKProgressBarNode *progressBar = (SSKProgressBarNode*)[self childNodeWithName:@"progressBar"];
     
     [progressBar setProgress:currentProgress];

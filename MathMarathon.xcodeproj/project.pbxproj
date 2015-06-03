@@ -48,6 +48,7 @@
 		578A2C941B146D58000137A7 /* TwoDimensionalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 578A2C821B146D58000137A7 /* TwoDimensionalArray.m */; };
 		578A2C971B146D9D000137A7 /* MMButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 578A2C961B146D9D000137A7 /* MMButtonNode.m */; };
 		578A2C9A1B146FB0000137A7 /* SSKColorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 578A2C991B146FB0000137A7 /* SSKColorNode.m */; };
+		579C39311B1EA9CF006832E2 /* MMGameOverNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 579C39301B1EA9CF006832E2 /* MMGameOverNode.m */; };
 		57EB3D171B16F42200F6954C /* MMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EB3D161B16F42200F6954C /* MMPlayer.m */; };
 		57EB3D201B16F9E800F6954C /* MMHUDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EB3D1F1B16F9E800F6954C /* MMHUDNode.m */; };
 		57EB3D281B171C4000F6954C /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 57EB3D271B171C4000F6954C /* player.atlas */; };
@@ -144,6 +145,8 @@
 		578A2C961B146D9D000137A7 /* MMButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMButtonNode.m; sourceTree = "<group>"; };
 		578A2C981B146FB0000137A7 /* SSKColorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKColorNode.h; sourceTree = "<group>"; };
 		578A2C991B146FB0000137A7 /* SSKColorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKColorNode.m; sourceTree = "<group>"; };
+		579C392F1B1EA9CF006832E2 /* MMGameOverNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMGameOverNode.h; sourceTree = "<group>"; };
+		579C39301B1EA9CF006832E2 /* MMGameOverNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMGameOverNode.m; sourceTree = "<group>"; };
 		57EB3D151B16F42200F6954C /* MMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPlayer.h; sourceTree = "<group>"; };
 		57EB3D161B16F42200F6954C /* MMPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPlayer.m; sourceTree = "<group>"; };
 		57EB3D1E1B16F9E800F6954C /* MMHUDNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMHUDNode.h; sourceTree = "<group>"; };
@@ -305,6 +308,8 @@
 				57EB3D161B16F42200F6954C /* MMPlayer.m */,
 				57EB3D1E1B16F9E800F6954C /* MMHUDNode.h */,
 				57EB3D1F1B16F9E800F6954C /* MMHUDNode.m */,
+				579C392F1B1EA9CF006832E2 /* MMGameOverNode.h */,
+				579C39301B1EA9CF006832E2 /* MMGameOverNode.m */,
 				577BE4531B1C48E200A131C7 /* MMObjectInRow.h */,
 				577BE4541B1C48E200A131C7 /* MMObjectInRow.m */,
 			);
@@ -518,6 +523,7 @@
 				578A2C8E1B146D58000137A7 /* SSKScoreNode.m in Sources */,
 				578A2C191B1451EE000137A7 /* AppDelegate.m in Sources */,
 				578A2C4A1B1454E7000137A7 /* MMSharedAssets.m in Sources */,
+				579C39311B1EA9CF006832E2 /* MMGameOverNode.m in Sources */,
 				578A2C411B145371000137A7 /* MMUserManager.m in Sources */,
 				578A2C911B146D58000137A7 /* SFAudio.m in Sources */,
 				572B752E1B1D504A004E1CE8 /* MMAnwser.m in Sources */,

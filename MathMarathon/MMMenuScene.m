@@ -11,11 +11,8 @@
 #import "MMSharedAssets.h"
 #import "SSKUtils.h"
 #import "MMGameScene.h"
-typedef NS_ENUM(NSUInteger, SceneLayer)
-{
-    SceneLayerBackground = 0,
-    ScenelayerMenu = 0,
-};
+#import "Define.h"
+
 CGFloat const kAnimationFadeTime     = 0.5;
 CGFloat const kAnimationMoveDistance = 10;
 @interface MMMenuScene()

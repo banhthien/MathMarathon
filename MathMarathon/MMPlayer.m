@@ -73,7 +73,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
             [self runAnimationWithTextures:self.duckingTextures speed:kAnimationSpeed key:@"playerDucking" withTimes:0];
             break;
         case PlayerStateDie:
-            [self runAnimationWithTextures:self.dieTextures speed:kAnimationSpeed key:@"playerDie" withTimes:1];
+            [self runAnimationWithTextures:self.dieTextures speed:kAnimationSpeed key:@"playerDie" withTimes:0];
             break;
         default:
             break;

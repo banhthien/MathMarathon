@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "MMItem.h"
 #import "MMPlayer.h"
+#import "Define.h"
 @interface MMObjectInRow : SKNode
 typedef NS_ENUM(NSUInteger, RowType)
 {

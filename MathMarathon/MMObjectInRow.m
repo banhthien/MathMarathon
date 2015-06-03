@@ -10,14 +10,7 @@
 #import "MMObjectInRow.h"
 #import "MMPlayer.h"
 #import "SSKUtils.h"
-typedef NS_ENUM(NSUInteger, SceneLayer)
-{
-    SceneLayerBackground = 0,
-    SceneLayerRoad=1,
-    SceneLayerItemUp=2,
-    SceneLayerPlayer=3,
-    SceneLayerItemDown=4,
-};
+
 
 
 @implementation MMObjectInRow

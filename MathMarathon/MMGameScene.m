@@ -7,13 +7,9 @@
 //
 
 #import "MMGameScene.h"
-#import "MMHUDNode.h"
-#import "MMPlayer.h"
-#import "MMItem.h"
-#import "MMObjectInRow.h"
-#import "MMSharedAssets.h"
-#import "SSKMathUtils.h"
-#import "SSKUtils.h"
+
+#import "Define.h"
+#import "MMMenuScene.h"
 typedef enum
 {
     PreGame,
@@ -22,50 +18,90 @@ typedef enum
     GameOver,
 }GameState;
 
-typedef NS_ENUM(NSUInteger, SceneLayer)
-{
-    SceneLayerBackground = 0,
-    SceneLayerRoad=1,
-     SceneLayerItemDown=4,
-    SceneLayerPlayer=3,
-    SceneLayerItemUp=2,
-    SceneLayerHUD=5,
-
-};
 @interface MMGameScene()
 {
     
 }
+
 @property (nonatomic) GameState gameState;
 @property (nonatomic) SKNode *worldNode;
 @property (nonatomic) MMHUDNode *hudNode;
+@property (nonatomic) MMGameOverNode *gameOverNode;
 @end
 @implementation MMGameScene
-
 - (void)didMoveToView:(SKView *)view
 {
     self.levelToShowAnwser = 0;
     [self createNewGame];
-   
 }
 
 #pragma mark - GameState PreGame
 - (void)createNewGame
 {
     self.gameState = PreGame;
-
     [self newWorldGame];
-    
 }
 
-#pragma GameState Playing
+#pragma mark - GameState Playing
 -(void)gameStart
 {
     self.gameState = Playing;
     [self newHudGame];
     [self.hudNode hudLayerFadeInAnimation];
-    
+    [self startScoreCounter];
     [self startRowSpawnSequence];
+}
+
+#pragma mark - GameState GameOver
+-(void)gameOver
+{
+    self.gameState = GameOver;
+    [self stopScoreCounter];
+    [self.hudNode saveCoins];
+    [self stopObstacleSpawnSequence];
+    [self stopObstacleMovement];
+    [self runGameOverSequence];
+    
+}
+- (void)runGameOverSequence {
+    
+    [self.hudNode hudLayerFadeOutAnimation];
+    
+    [self newGameOverHud];
+    [self.gameOverNode gameOverFadeInAnimation];
+}
+
+- (void)resetGame {
+    SKSpriteNode *fadeNode = [SKSpriteNode spriteNodeWithColor:[SKColor whiteColor] size:self.size];
+    [fadeNode setZPosition:SceneLayerFadeOut];
+    [fadeNode setAlpha:0];
+    [self addChild:fadeNode];
+    
+    [fadeNode runAction:[SKAction fadeInWithDuration:1] completion:^{
+        [self.worldNode removeFromParent];
+        [self.hudNode removeFromParent];
+        [self.gameOverNode removeFromParent];
+        //[self removeUnparentedNodes];
+        self.levelToShowAnwser =0;
+        [self createNewGame];
+        
+        [self runAction:[SKAction waitForDuration:.5] completion:^{
+            [fadeNode runAction:[SKAction fadeOutWithDuration:1] completion:^{
+                [fadeNode removeFromParent];
+            }];
+        }];
+    }];
+}
+
+- (void)newGameOverHud
+{
+     NSString *currentScoreString = [(SSKScoreNode*)[self.hudNode childNodeWithName:@"scoreCounter"] text];
+    self.gameOverNode = [MMGameOverNode node];
+    [self.gameOverNode initWithZPos:SceneLayerGameOver withScene:self];
+    [self addChild:self.gameOverNode];
+    [self.gameOverNode createObjectInGameOverWithScoreCounter:currentScoreString];
+    [self.gameOverNode addChild:[self retryButton]];
+    [self.gameOverNode addChild:[self menuButton]];
 }
 
 #pragma mark - new Hud Game
@@ -74,6 +110,50 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
     self.hudNode = [MMHUDNode node];
     [self.hudNode initWithZPos:SceneLayerHUD withScene:self];
     [self addChild:self.hudNode];
+}
+
+#pragma mark - Scene Transfer
+- (void)loadMenuScene {
+    [MMMenuScene loadSceneAssetsWithCompletionHandler:^{
+        SKScene *menuScene = [MMMenuScene sceneWithSize:self.size];
+        SKTransition *fade = [SKTransition fadeWithColor:[SKColor whiteColor] duration:1];
+        [self.view presentScene:menuScene transition:fade];
+    }];
+}
+
+#pragma mark - Menu Button
+- (MMButtonNode*)menuButton {
+    MMButtonNode *menuButton = [MMButtonNode buttonWithTexture:[MMSharedAssets sharedButtonHome]
+                                                      idleSize:CGSizeMake(80, 80)
+                                                  selectedSize:CGSizeMake(70, 70)];
+    
+    [menuButton setTouchUpInsideTarget:self selector:@selector(menuButtonTouched)];
+    [menuButton setPosition:CGPointMake(-80, -self.size.height/7)];
+    [menuButton setZPosition:SceneLayerButtons];
+    return menuButton;
+    
+}
+
+- (void)menuButtonTouched {
+    [self loadMenuScene];
+    [[MMBackGroundManager sharedManager] incrementDay];
+}
+
+#pragma mark - Retry Button
+- (MMButtonNode*)retryButton {
+    MMButtonNode *retryButton = [MMButtonNode buttonWithTexture:[MMSharedAssets sharedButtonPlay]
+                                                       idleSize:CGSizeMake(80, 80)
+                                                   selectedSize:CGSizeMake(70, 70)];
+    
+    [retryButton setTouchUpInsideTarget:self selector:@selector(retryButtonTouched)];
+    [retryButton setPosition:CGPointMake(70, -self.size.height/7)];
+    [retryButton setZPosition:SceneLayerButtons];
+    return retryButton;
+}
+
+- (void)retryButtonTouched {
+    [self resetGame];
+    [[MMBackGroundManager sharedManager] incrementDay];
 }
 
 #pragma mark - new world game
@@ -176,8 +256,6 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
             [rowNode createItemInRowWithSize:self.size withType:RowTypeItem];
             [self.worldNode addChild:rowNode];
         }
-        //[rowNode moveRowItem];
-      
     }];
     SKAction *sequence = [SKAction sequence:@[wait, spawnRowMove]];
     [self runAction:[SKAction repeatActionForever:sequence] withKey:@"gamePlaying"];
@@ -206,10 +284,10 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
             if (CGRectIntersectsRect([self currentPlayer].frame, item.frame)) {
                     switch (item.type) {
                         case ItemTypeObstacleCanDuck:
-                            NSLog(@"dung thang co the cui xuong");
+                            [self gameOver];
                             break;
                         case ItemTypeObstacleCanJump:
-                            NSLog(@"dung thang co the nhay len");
+                           [self gameOver];
                             break;
                         case ItemTypeBunusScore:
                         {
@@ -269,6 +347,8 @@ typedef NS_ENUM(NSUInteger, SceneLayer)
 - (MMPlayer*)currentPlayer {
     return (MMPlayer*)[self.worldNode childNodeWithName:@"player"];
 }
+
+
 #pragma mark - Scene Processing
 - (void)update:(NSTimeInterval)currentTime {
     [super update:currentTime];

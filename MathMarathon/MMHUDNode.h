@@ -23,4 +23,5 @@
 - (void)addNode;
 - (void)stopScoreCounter;
 -(void)addScore;
+- (void)saveCoins;
 @end
