@@ -8,11 +8,6 @@
 
 #import "MMGameOverNode.h"
 
-CGFloat const kMoveAndFadeTime     = 1;
-CGFloat const kMoveAndFadeDistance = 20;
-CGFloat kButtonPadding = 10.0;
-CGFloat kButtonIdleWidth = 80.0;
-CGFloat kButtonSelectedWidth = 70.0;
 @implementation MMGameOverNode
 
 -(void)initWithZPos:(NSUInteger)Zpos withScene:(SSKScene *)scene
@@ -21,7 +16,7 @@ CGFloat kButtonSelectedWidth = 70.0;
     [self setZPosition:SceneLayerGameOver];
     [self setName:@"gameOver"];
     [self setAlpha:0];
-    [self setPosition:CGPointMake(-kMoveAndFadeDistance, 0)];
+    [self setPosition:CGPointMake(-20, 0)];
 
 }
 
@@ -31,7 +26,7 @@ CGFloat kButtonSelectedWidth = 70.0;
     // Game over text label
     SKLabelNode *gameOverLabel = [self createNewLabelWithText:@"Game Over" withFontSize:40];
     [gameOverLabel setFontColor:[SKColor colorWithR:150 g:5 b:5]];
-    //[gameOverLabel setPosition:CGPointMake(0, self.parentScene.size.height)];
+    [gameOverLabel setPosition:CGPointMake(0, self.parentScene.size.height/3)];
     [self addChild:gameOverLabel];
     
     // Score string
