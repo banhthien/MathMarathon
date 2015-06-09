@@ -52,10 +52,7 @@
     {
     MMItem *item = [self itemWithType:[self randomFrom:1 toNumber:2] withPos:pos];
     [self addChild:item];
-        [item runAction:[SKAction moveToY:-self.size.height duration:4 ] withKey:@"moveObstacle" completion:^
-         {
-             [item removeFromParent];
-         }];
+        [item moveItemActionWithY:-self.size.height];
     }
     else if(randomNumber == 3)
     {
@@ -63,10 +60,8 @@
         SKAction *addCoin = [SKAction runBlock:^{
             MMItem *item = [self itemWithType:ItemTypeBunusScore withPos:pos];
             [self addChild:item];
-            [item runAction:[SKAction moveToY:-self.size.height duration:4 ] withKey:@"moveObstacle" completion:^
-             {
-                 [item removeFromParent];
-             }];
+            [item scaleMoveAction];
+            [item moveItemActionWithY:-self.size.height];
         }];
         SKAction *squence = [SKAction sequence:@[wait,addCoin]];
         [self runAction:[SKAction repeatAction:squence count:[self randomFrom:1 toNumber:5]]];
@@ -76,6 +71,14 @@
         
     }
     
+}
+
+-(void)removeAction
+{
+    [self enumerateChildNodesWithName:@"item" usingBlock:^(SKNode *node, BOOL *stop) {
+        [node removeActionForKey:@"moveObstacle"];
+        [node removeActionForKey:@"scaleItem"];
+    }];
 }
 
 -(NSUInteger)randomFrom:(NSUInteger)fromNumber toNumber:(NSUInteger)toNumber

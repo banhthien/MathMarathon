@@ -268,9 +268,7 @@ typedef enum
 - (void)stopObstacleMovement {
     [self.worldNode enumerateChildNodesWithName:@"rowNode" usingBlock:^(SKNode *node, BOOL *stop) {
         MMObjectInRow *rowNode = (MMObjectInRow*)node;
-        [rowNode enumerateChildNodesWithName:@"item" usingBlock:^(SKNode *node, BOOL *stop) {
-            [node removeActionForKey:@"moveObstacle"];
-        }];
+        [rowNode removeAction];
     }];
 }
 

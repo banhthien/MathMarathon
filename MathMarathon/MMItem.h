@@ -7,6 +7,7 @@
 //
 
 #import "MMSpriteAnimation.h"
+#import "SSKUtils.h"
 
 @interface MMItem : MMSpriteAnimation
 typedef NS_ENUM(NSUInteger, ItemType) {
@@ -18,7 +19,9 @@ typedef NS_ENUM(NSUInteger, ItemType) {
 @property (nonatomic) ItemType type;
 @property (nonatomic) NSArray* bonusItem;
 + (instancetype)itemWithType:(ItemType)type;
-- (instancetype)initWithType:(ItemType)type;
+- (instancetype)initWithTypes:(ItemType)type;
 - (void)update:(NSTimeInterval)dt;
 - (void)spinCoinAnimation;
+- (void)scaleMoveAction;
+- (void)moveItemActionWithY:(CGFloat)posY;
 @end

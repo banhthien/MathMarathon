@@ -11,10 +11,10 @@
 @implementation MMItem
 + (instancetype)itemWithType:(ItemType)type
 {
-    return [[self alloc] initWithType:type];
+    return [[self alloc] initWithTypes:type];
 
 }
-- (instancetype)initWithType:(ItemType)type;
+- (instancetype)initWithTypes:(ItemType)type;
 {
     SKTexture *texture = [self textureForItemType:type];
     self = [super initWithTexture:texture];
@@ -46,6 +46,7 @@
     }
     return texture;
 }
+
 -(void)spinCoinAnimation
 {
     if ([self actionForKey:@"spinCoin"]) {
@@ -55,6 +56,21 @@
     SKAction *animation = [SKAction animateWithTextures:self.bonusItem timePerFrame:0.1];
     [self runAction:[SKAction repeatActionForever:animation] withKey:@"spinCoin"];
 }
+
+-(void)moveItemActionWithY:(CGFloat)posY
+{
+    [self runAction:[SKAction moveToY:posY duration:4 ] withKey:@"moveObstacle" completion:^
+     {
+         [self removeFromParent];
+     }];
+}
+
+-(void)scaleMoveAction
+{
+    SKAction *animation = [SKAction scaleTo:2 duration:4];
+    [self runAction:animation withKey:@"scaleItem"];
+}
+
 - (void)update:(NSTimeInterval)dt
 {
     
