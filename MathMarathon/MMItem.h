@@ -23,5 +23,5 @@ typedef NS_ENUM(NSUInteger, ItemType) {
 - (void)update:(NSTimeInterval)dt;
 - (void)spinCoinAnimation;
 - (void)scaleMoveAction;
-- (void)moveItemActionWithY:(CGFloat)posY;
+- (void)moveItemActionWithY:(CGPoint)pos;
 @end

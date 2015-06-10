@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		572B752E1B1D504A004E1CE8 /* MMAnwser.m in Sources */ = {isa = PBXBuildFile; fileRef = 572B752D1B1D504A004E1CE8 /* MMAnwser.m */; };
 		572B75301B1D6524004E1CE8 /* coins.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 572B752F1B1D6524004E1CE8 /* coins.atlas */; };
+		575A99A61B27DF80001247EB /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 575A99A51B27DF80001247EB /* bg.jpg */; };
+		575A99A81B27E257001247EB /* explain.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 575A99A71B27E257001247EB /* explain.jpg */; };
 		577BE4491B1BFEB500A131C7 /* MMItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 577BE4481B1BFEB500A131C7 /* MMItem.m */; };
 		577BE44C1B1C05CA00A131C7 /* MMPhysicalManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 577BE44B1B1C05CA00A131C7 /* MMPhysicalManager.m */; };
 		577BE44E1B1C09AB00A131C7 /* item.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 577BE44D1B1C09AB00A131C7 /* item.atlas */; };
@@ -68,6 +70,8 @@
 		572B752C1B1D504A004E1CE8 /* MMAnwser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMAnwser.h; sourceTree = "<group>"; };
 		572B752D1B1D504A004E1CE8 /* MMAnwser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMAnwser.m; sourceTree = "<group>"; };
 		572B752F1B1D6524004E1CE8 /* coins.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = coins.atlas; sourceTree = "<group>"; };
+		575A99A51B27DF80001247EB /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
+		575A99A71B27E257001247EB /* explain.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = explain.jpg; sourceTree = "<group>"; };
 		577BE4471B1BFEB500A131C7 /* MMItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMItem.h; sourceTree = "<group>"; };
 		577BE4481B1BFEB500A131C7 /* MMItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMItem.m; sourceTree = "<group>"; };
 		577BE44A1B1C05CA00A131C7 /* MMPhysicalManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPhysicalManager.h; sourceTree = "<group>"; };
@@ -264,8 +268,10 @@
 		578A2C471B1454BD000137A7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				575A99A71B27E257001247EB /* explain.jpg */,
 				578A2C481B1454E7000137A7 /* MMSharedAssets.h */,
 				578A2C491B1454E7000137A7 /* MMSharedAssets.m */,
+				575A99A51B27DF80001247EB /* bg.jpg */,
 				572B752F1B1D6524004E1CE8 /* coins.atlas */,
 				577BE44D1B1C09AB00A131C7 /* item.atlas */,
 				57EB3D271B171C4000F6954C /* player.atlas */,
@@ -482,7 +488,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				57EB3D281B171C4000F6954C /* player.atlas in Resources */,
+				575A99A61B27DF80001247EB /* bg.jpg in Resources */,
 				577BE44E1B1C09AB00A131C7 /* item.atlas in Resources */,
+				575A99A81B27E257001247EB /* explain.jpg in Resources */,
 				572B75301B1D6524004E1CE8 /* coins.atlas in Resources */,
 				578A2C291B1451EE000137A7 /* LaunchScreen.xib in Resources */,
 				578A2C261B1451EE000137A7 /* Images.xcassets in Resources */,

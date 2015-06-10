@@ -19,17 +19,19 @@
     self.size=size;
     if(type == RowTypeItem){
 
-        [self randomNewItemWithPos:CGPointMake((self.size.width/5)-self.size.width/2, self.size.height/2)];
-        [self randomNewItemWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, self.size.height/2)];
-        [self randomNewItemWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5, self.size.height/2)];
-        [self randomNewItemWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5+self.size.width/5, self.size.height/2)];
+        [self randomNewItemWithPos:CGPointMake((self.size.width/48)-self.size.width/12 , self.size.height/2) withStop:CGPointMake((self.size.width/8)-self.size.width/2, -self.size.height/2 +10)];
+        [self randomNewItemWithPos:CGPointMake((self.size.width/48)-self.size.width/12+self.size.width/24, self.size.height/2) withStop:CGPointMake((self.size.width/8)-self.size.width/2 + self.size.width/4 , -self.size.height/2 +10)];
+        [self randomNewItemWithPos:CGPointMake((self.size.width/48)-self.size.width/12+self.size.width/24+self.size.width/24, self.size.height/2) withStop:CGPointMake((self.size.width/8)-self.size.width/2 + self.size.width/4 + self.size.width/4, -self.size.height/2 +10)];
+        
+        [self randomNewItemWithPos:CGPointMake((self.size.width/48)-self.size.width/12+self.size.width/24+self.size.width/24+self.size.width/24, self.size.height/2) withStop:CGPointMake((self.size.width/8)-self.size.width/2 + self.size.width/4 + self.size.width/4 + self.size.width/4, -self.size.height/2 +10)];
+        
     }
     else if(type == RowTypeAnswer)
     {
-        [self newAnwserWithPos:CGPointMake((self.size.width/5)-self.size.width/2, self.size.height/2) withContext:@"10"];
-        [self newAnwserWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5, self.size.height/2) withContext:@"15"];
-        [self newAnwserWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5, self.size.height/2) withContext:@"30"];
-        [self newAnwserWithPos:CGPointMake((self.size.width/5)-self.size.width/2 +self.size.width/5+self.size.width/5+self.size.width/5, self.size.height/2) withContext:@"5"];
+        [self newAnwserWithPos:CGPointMake((self.size.width/8)-self.size.width/2, self.size.height/2) withContext:@"10"];
+        [self newAnwserWithPos:CGPointMake((self.size.width/8)-self.size.width/2 +self.size.width/5, self.size.height/2) withContext:@"15"];
+        [self newAnwserWithPos:CGPointMake((self.size.width/8)-self.size.width/2 +self.size.width/5+self.size.width/5, self.size.height/2) withContext:@"30"];
+        [self newAnwserWithPos:CGPointMake((self.size.width/8)-self.size.width/2 +self.size.width/5+self.size.width/5+self.size.width/5, self.size.height/2) withContext:@"5"];
     }
 }
 -(void)newAnwserWithPos:(CGPoint)pos withContext:(NSString*)context
@@ -45,23 +47,24 @@
         [myLabel removeFromParent];
     }];
 }
--(void)randomNewItemWithPos:(CGPoint)pos
+-(void)randomNewItemWithPos:(CGPoint)posStart withStop:(CGPoint)posStop
 {
     NSUInteger randomNumber = [self randomFrom:1 toNumber:4];
     if(randomNumber == 1 || randomNumber == 2)
     {
-    MMItem *item = [self itemWithType:[self randomFrom:1 toNumber:2] withPos:pos];
+    MMItem *item = [self itemWithType:[self randomFrom:1 toNumber:2] withPos:posStart];
     [self addChild:item];
-        [item moveItemActionWithY:-self.size.height];
+        [item scaleMoveAction];
+        [item moveItemActionWithY:posStop];
     }
     else if(randomNumber == 3)
     {
         SKAction *wait = [SKAction waitForDuration:0.2];
         SKAction *addCoin = [SKAction runBlock:^{
-            MMItem *item = [self itemWithType:ItemTypeBunusScore withPos:pos];
+            MMItem *item = [self itemWithType:ItemTypeBunusScore withPos:posStart];
             [self addChild:item];
             [item scaleMoveAction];
-            [item moveItemActionWithY:-self.size.height];
+            [item moveItemActionWithY:posStop];
         }];
         SKAction *squence = [SKAction sequence:@[wait,addCoin]];
         [self runAction:[SKAction repeatAction:squence count:[self randomFrom:1 toNumber:5]]];
@@ -95,20 +98,20 @@
     switch (type) {
         case ItemTypeObstacleCanDuck:
             [item setZPosition:SceneLayerItemDown];
-            [item setSize:CGSizeMake(self.size.width/5, 30)];
+            [item setSize:CGSizeMake(self.size.width/48, 5)];
             break;
         case ItemTypeObstacleCanJump:
             [item setZPosition:SceneLayerItemUp];
-            [item setSize:CGSizeMake(self.size.width/5, 30)];
+            [item setSize:CGSizeMake(self.size.width/48, 5)];
             break;
         case ItemTypeObstacleBothOfJumpDuck:
             [item setZPosition:SceneLayerItemUp];
-            [item setSize:CGSizeMake(self.size.width/5, 30)];
+            [item setSize:CGSizeMake(self.size.width/48, 5)];
             break;
         case ItemTypeBunusScore:
              [item spinCoinAnimation];
             [item setZPosition:SceneLayerItemUp];
-            [item setSize:CGSizeMake(self.size.width/7, 20)];
+            [item setSize:CGSizeMake(self.size.width/48, 3)];
             break;
         default:
             break;

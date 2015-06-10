@@ -9,11 +9,13 @@
 #import "MMItem.h"
 #import "MMSharedAssets.h"
 @implementation MMItem
+
 + (instancetype)itemWithType:(ItemType)type
 {
     return [[self alloc] initWithTypes:type];
 
 }
+
 - (instancetype)initWithTypes:(ItemType)type;
 {
     SKTexture *texture = [self textureForItemType:type];
@@ -57,17 +59,30 @@
     [self runAction:[SKAction repeatActionForever:animation] withKey:@"spinCoin"];
 }
 
--(void)moveItemActionWithY:(CGFloat)posY
+-(void)moveItemActionWithY:(CGPoint)pos
 {
-    [self runAction:[SKAction moveToY:posY duration:4 ] withKey:@"moveObstacle" completion:^
+    SKAction *move = [SKAction moveTo:pos duration:5.5 ];
+    //move.timingMode = SKActionTimingEaseIn;
+    move.timingFunction = ^float(float t){
+        return t*t;
+    };
+    [self runAction:move withKey:@"moveObstacle" completion:^
      {
          [self removeFromParent];
      }];
 }
 
+-(CGFloat)timingFunc:(CGFloat)time
+{
+    return time;
+}
+
 -(void)scaleMoveAction
 {
-    SKAction *animation = [SKAction scaleTo:2 duration:4];
+    SKAction *animation = [SKAction scaleTo:9 duration:5.5];
+    animation.timingFunction=^float(float t){
+        return t*t;
+    };
     [self runAction:animation withKey:@"scaleItem"];
 }
 

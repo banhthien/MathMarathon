@@ -164,13 +164,19 @@ typedef enum
     [self.worldNode setName:@"world"];
     [self addChild:self.worldNode];
     
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake((self.size.width/10)-self.size.width/2, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor greenColor] withName:@"rect"]];
+//    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake((self.size.width/10)-self.size.width/2, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor greenColor] withName:@"rect"]];
+//    
+//    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor orangeColor] withName:@"rect"]];
+//    
+//    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor redColor] withName:@"rect"]];
+//    
+//    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor grayColor] withName:@"rect"]];
     
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor orangeColor] withName:@"rect"]];
-    
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor redColor] withName:@"rect"]];
-    
-    [self.worldNode addChild:[self newRectNodeWithBox:CGRectMake( self.size.width/10-self.size.width/2+ self.size.width/5+ self.size.width/5+ self.size.width/5, -self.size.height/2, self.size.width/5, self.size.height - self.size.height/10) withColor:[SKColor blueColor] withFillColor:[UIColor grayColor] withName:@"rect"]];
+    SKSpriteNode *background =[SKSpriteNode spriteNodeWithImageNamed:@"explain.jpg"];
+    [background setName:@"background"];
+    [background setSize:CGSizeMake(self.size.width, self.size.height)];
+    [background setZPosition:SceneLayerBackground];
+    [self addChild:background];
     
     MMPlayer *player = [self playerWithType:PlayerTypeBlack atlas:[MMSharedAssets sharedPlayerTextures]];
     [self.worldNode addChild:player];
@@ -228,9 +234,9 @@ typedef enum
 {
     MMPlayer *player = [MMPlayer playerWithType:type atlas:atlas];
     
-    [player setPosition:CGPointMake((self.size.width/5)-self.size.width/2, -self.size.height/2 +50)];
+    [player setPosition:CGPointMake((self.size.width/8)-self.size.width/2, -self.size.height/2 +10)];
     [player setName:@"player"];
-    [player setSize:CGSizeMake(30, 30)];
+    [player setSize:CGSizeMake(40 , 40)];
     [player setZPosition:SceneLayerPlayer];
     [player setPlayerState:PlayerStateRun];
     

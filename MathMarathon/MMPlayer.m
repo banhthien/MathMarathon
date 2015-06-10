@@ -84,7 +84,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 -(void)moveRightWithSize:(CGSize)size
 {
     self.inAction=TRUE;
-    [self runAction:[SKAction moveByX:(size.width/5) y:0 duration:0.5] completion:^{
+    [self runAction:[SKAction moveByX:(size.width/4) y:0 duration:0.5] completion:^{
         self.inAction = FALSE;
     }];
 }
@@ -92,7 +92,7 @@ CGFloat const kIdleAnimationSpeed = 0.25;
 -(void)moveLeftWithSize:(CGSize)size
 {
     self.inAction=TRUE;
-    [self runAction:[SKAction moveByX:-(size.width/5) y:0 duration:0.5] completion:^{
+    [self runAction:[SKAction moveByX:-(size.width/4) y:0 duration:0.5] completion:^{
         self.inAction = FALSE;
     }];
 }
